@@ -1,0 +1,107 @@
+{
+  "name": "ecss-language-support",
+  "displayName": "ECSS — Extended CSS",
+  "version": "0.1.1",
+  "description": "VS Code extension for ECSS — syntax highlighting and language server for .ecss files.",
+  "categories": [
+    "Programming Languages"
+  ],
+  "keywords": [
+    "css",
+    "ecss",
+    "extended css",
+    "state-def",
+    "state-variant",
+    "vscode",
+    "vscode-extension"
+  ],
+  "homepage": "https://ecss.webea.ch",
+  "bugs": {
+    "url": "https://github.com/webeach/ecss-vscode-extension/issues"
+  },
+  "license": "MIT",
+  "author": {
+    "name": "Ruslan Martynov",
+    "email": "github@webea.ch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/webeach/ecss-vscode-extension"
+  },
+  "publisher": "webeach",
+  "main": "./dist/extension.js",
+  "scripts": {
+    "build": "node esbuild.mjs",
+    "watch": "node esbuild.mjs --watch",
+    "package": "vsce package --no-dependencies",
+    "vsce:publish": "vsce publish --no-dependencies",
+    "typecheck": "tsc --noEmit",
+    "lint": "oxlint .",
+    "lint:fix": "oxlint --fix .",
+    "fmt": "oxfmt",
+    "fmt:check": "oxfmt --check",
+    "prepare": "is-ci || husky"
+  },
+  "dependencies": {
+    "@ecss/parser": "^0.1.2",
+    "vscode-css-languageservice": "^6.3.10",
+    "vscode-languageclient": "^9.0.1",
+    "vscode-languageserver": "^9.0.1",
+    "vscode-languageserver-textdocument": "^1.0.12"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^20.0.0",
+    "@commitlint/config-conventional": "^20.0.0",
+    "@types/node": "^22.0.0",
+    "@types/vscode": "^1.85.0",
+    "@vscode/vsce": "^3.0.0",
+    "esbuild": "^0.25.0",
+    "husky": "^9.1.7",
+    "is-ci": "^4.1.0",
+    "lint-staged": "^16.1.6",
+    "oxfmt": "^0.36.0",
+    "oxlint": "^1.51.0",
+    "typescript": "^5.0.0"
+  },
+  "lint-staged": {
+    "**/*.{cjs,cts,js,jsx,mjs,mts,ts,tsx}": [
+      "oxlint --fix",
+      "oxfmt"
+    ],
+    "**/*.json": [
+      "oxfmt"
+    ]
+  },
+  "contributes": {
+    "languages": [
+      {
+        "id": "ecss",
+        "aliases": [
+          "ECSS",
+          "Extended CSS"
+        ],
+        "extensions": [
+          ".ecss"
+        ],
+        "configuration": "./language-configuration.json"
+      }
+    ],
+    "grammars": [
+      {
+        "language": "ecss",
+        "scopeName": "source.ecss",
+        "path": "./syntaxes/ecss.tmLanguage.json"
+      }
+    ]
+  },
+  "icon": "assets/logo.png",
+  "galleryBanner": {
+    "color": "#9B7AEF",
+    "theme": "dark"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "vscode": "^1.85.0"
+  },
+  "packageManager": "pnpm@10.7.1"
+}

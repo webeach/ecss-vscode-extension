@@ -1,0 +1,311 @@
+{
+  "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+  "name": "ECSS",
+  "scopeName": "source.ecss",
+  "fileTypes": ["ecss"],
+  "patterns": [
+    { "include": "#comment-block" },
+    { "include": "#ecss-state-variant" },
+    { "include": "#ecss-state-def" },
+    { "include": "source.css" }
+  ],
+  "repository": {
+    "comment-block": {
+      "begin": "/\\*",
+      "end": "\\*/",
+      "name": "comment.block.ecss"
+    },
+
+    "ecss-state-variant": {
+      "name": "meta.at-rule.state-variant.ecss",
+      "begin": "(?i)((@)state-variant)\\s+([A-Z][a-zA-Z0-9]*)\\s*(?=\\{)",
+      "beginCaptures": {
+        "1": { "name": "keyword.control.at-rule.state-variant.ecss" },
+        "2": { "name": "punctuation.definition.keyword.ecss" },
+        "3": { "name": "entity.name.type.state-variant.ecss" }
+      },
+      "end": "\\}",
+      "endCaptures": {
+        "0": { "name": "punctuation.section.block.end.ecss" }
+      },
+      "patterns": [
+        { "include": "#comment-block" },
+        {
+          "match": "\\{",
+          "name": "punctuation.section.block.begin.ecss"
+        },
+        {
+          "match": "\\b(values)\\b",
+          "name": "support.type.property-name.ecss"
+        },
+        {
+          "match": ":",
+          "name": "punctuation.separator.key-value.ecss"
+        },
+        {
+          "match": ";",
+          "name": "punctuation.terminator.ecss"
+        },
+        {
+          "match": ",",
+          "name": "punctuation.separator.ecss"
+        },
+        { "include": "#string-double" },
+        { "include": "#string-single" },
+        {
+          "match": "\\b[a-zA-Z][a-zA-Z0-9-]*\\b",
+          "name": "string.unquoted.variant-value.ecss"
+        }
+      ]
+    },
+
+    "ecss-state-def": {
+      "name": "meta.at-rule.state-def.ecss",
+      "begin": "(?i)((@)state-def)\\s+",
+      "beginCaptures": {
+        "1": { "name": "keyword.control.at-rule.state-def.ecss" },
+        "2": { "name": "punctuation.definition.keyword.ecss" }
+      },
+      "end": "(?<=\\})",
+      "patterns": [
+        { "include": "#comment-block" },
+        {
+          "name": "meta.state-def.signature.ecss",
+          "match": "([A-Z][a-zA-Z0-9]*)\\s*(?=\\(|\\{)",
+          "captures": {
+            "1": { "name": "entity.name.type.state-def.ecss" }
+          }
+        },
+        {
+          "name": "meta.state-def.params.ecss",
+          "begin": "\\(",
+          "beginCaptures": {
+            "0": { "name": "punctuation.definition.parameters.begin.ecss" }
+          },
+          "end": "\\)",
+          "endCaptures": {
+            "0": { "name": "punctuation.definition.parameters.end.ecss" }
+          },
+          "patterns": [
+            { "include": "#comment-block" },
+            { "include": "#param-entry" }
+          ]
+        },
+        { "include": "#state-def-body" }
+      ]
+    },
+
+    "param-entry": {
+      "patterns": [
+        {
+          "match": "(--[a-zA-Z][a-zA-Z0-9-]*)\\s+(boolean)(?:\\s*(:)\\s*(true|false))?",
+          "captures": {
+            "1": { "name": "variable.parameter.ecss" },
+            "2": { "name": "support.type.primitive.boolean.ecss" },
+            "3": { "name": "punctuation.separator.key-value.ecss" },
+            "4": { "name": "constant.language.boolean.ecss" }
+          }
+        },
+        {
+          "match": "(--[a-zA-Z][a-zA-Z0-9-]*)\\s+([A-Z][a-zA-Z0-9]*)(?:\\s*(:)\\s*(?:([a-zA-Z][a-zA-Z0-9-]*)|\"([^\"]*)\"|'([^']*)'))?",
+          "captures": {
+            "1": { "name": "variable.parameter.ecss" },
+            "2": { "name": "entity.name.type.variant-ref.ecss" },
+            "3": { "name": "punctuation.separator.key-value.ecss" },
+            "4": { "name": "string.unquoted.variant-default.ecss" },
+            "5": { "name": "string.quoted.double.variant-default.ecss" },
+            "6": { "name": "string.quoted.single.variant-default.ecss" }
+          }
+        },
+        {
+          "match": "(--[a-zA-Z][a-zA-Z0-9-]*)(?:\\s*(:)\\s*(true|false))?",
+          "captures": {
+            "1": { "name": "variable.parameter.ecss" },
+            "2": { "name": "punctuation.separator.key-value.ecss" },
+            "3": { "name": "constant.language.boolean.ecss" }
+          }
+        },
+        {
+          "match": ",",
+          "name": "punctuation.separator.parameter.ecss"
+        }
+      ]
+    },
+
+    "state-def-body": {
+      "name": "meta.block.state-def.ecss",
+      "begin": "\\{",
+      "beginCaptures": {
+        "0": { "name": "punctuation.section.block.begin.ecss" }
+      },
+      "end": "\\}",
+      "endCaptures": {
+        "0": { "name": "punctuation.section.block.end.ecss" }
+      },
+      "patterns": [
+        { "include": "#comment-block" },
+        { "include": "#ecss-if-chain" },
+        { "include": "#css-property" },
+        { "include": "#nested-rule" }
+      ]
+    },
+
+    "ecss-if-chain": {
+      "patterns": [
+        { "include": "#ecss-if-clause" },
+        { "include": "#ecss-elseif-clause" },
+        { "include": "#ecss-else-clause" }
+      ]
+    },
+
+    "ecss-if-clause": {
+      "name": "meta.at-rule.if.ecss",
+      "begin": "(?i)((@)if)\\s*(?=\\()",
+      "beginCaptures": {
+        "1": { "name": "keyword.control.conditional.if.ecss" },
+        "2": { "name": "punctuation.definition.keyword.ecss" }
+      },
+      "end": "(?<=\\})",
+      "patterns": [
+        { "include": "#condition-parens" },
+        { "include": "#if-body" }
+      ]
+    },
+
+    "ecss-elseif-clause": {
+      "name": "meta.at-rule.elseif.ecss",
+      "begin": "(?i)((@)elseif)\\s*(?=\\()",
+      "beginCaptures": {
+        "1": { "name": "keyword.control.conditional.elseif.ecss" },
+        "2": { "name": "punctuation.definition.keyword.ecss" }
+      },
+      "end": "(?<=\\})",
+      "patterns": [
+        { "include": "#condition-parens" },
+        { "include": "#if-body" }
+      ]
+    },
+
+    "ecss-else-clause": {
+      "name": "meta.at-rule.else.ecss",
+      "begin": "(?i)((@)else)\\s*(?=\\{)",
+      "beginCaptures": {
+        "1": { "name": "keyword.control.conditional.else.ecss" },
+        "2": { "name": "punctuation.definition.keyword.ecss" }
+      },
+      "end": "(?<=\\})",
+      "patterns": [{ "include": "#if-body" }]
+    },
+
+    "condition-parens": {
+      "name": "meta.condition.ecss",
+      "begin": "\\(",
+      "beginCaptures": {
+        "0": { "name": "punctuation.definition.condition.begin.ecss" }
+      },
+      "end": "\\)",
+      "endCaptures": {
+        "0": { "name": "punctuation.definition.condition.end.ecss" }
+      },
+      "patterns": [
+        { "include": "#comment-block" },
+        { "include": "#condition-expr" }
+      ]
+    },
+
+    "condition-expr": {
+      "patterns": [
+        {
+          "match": "\\|\\||&&",
+          "name": "keyword.operator.logical.ecss"
+        },
+        {
+          "match": "==|!=",
+          "name": "keyword.operator.comparison.ecss"
+        },
+        {
+          "match": "\\b(true|false)\\b",
+          "name": "constant.language.boolean.ecss"
+        },
+        {
+          "match": "--[a-zA-Z][a-zA-Z0-9-]*",
+          "name": "variable.parameter.ecss"
+        },
+        { "include": "#string-double" },
+        { "include": "#string-single" },
+        {
+          "match": "\\b[a-zA-Z][a-zA-Z0-9-]*\\b",
+          "name": "string.unquoted.variant-value.ecss"
+        },
+        { "include": "#condition-parens" }
+      ]
+    },
+
+    "if-body": {
+      "name": "meta.block.if.ecss",
+      "begin": "\\{",
+      "beginCaptures": {
+        "0": { "name": "punctuation.section.block.begin.ecss" }
+      },
+      "end": "\\}",
+      "endCaptures": {
+        "0": { "name": "punctuation.section.block.end.ecss" }
+      },
+      "patterns": [
+        { "include": "#comment-block" },
+        { "include": "#ecss-if-chain" },
+        { "include": "#css-property" },
+        { "include": "#nested-rule" }
+      ]
+    },
+
+    "nested-rule": {
+      "name": "meta.block.nested.ecss",
+      "begin": "([^{};@/]+)\\s*(?=\\{)",
+      "beginCaptures": {
+        "1": { "name": "entity.other.attribute-name.ecss" }
+      },
+      "end": "(?<=\\})",
+      "patterns": [{ "include": "#state-def-body" }]
+    },
+
+    "css-property": {
+      "patterns": [
+        {
+          "name": "meta.property.ecss",
+          "match": "(-?[a-zA-Z][a-zA-Z0-9-]*|--[a-zA-Z][a-zA-Z0-9-]*)\\s*(:)\\s*([^;{}]+)(;)?",
+          "captures": {
+            "1": { "name": "support.type.property-name.css" },
+            "2": { "name": "punctuation.separator.key-value.css" },
+            "3": { "name": "meta.property-value.css" },
+            "4": { "name": "punctuation.terminator.rule.css" }
+          }
+        }
+      ]
+    },
+
+    "string-double": {
+      "name": "string.quoted.double.ecss",
+      "begin": "\"",
+      "end": "\"",
+      "patterns": [
+        {
+          "match": "\\\\.",
+          "name": "constant.character.escape.ecss"
+        }
+      ]
+    },
+
+    "string-single": {
+      "name": "string.quoted.single.ecss",
+      "begin": "'",
+      "end": "'",
+      "patterns": [
+        {
+          "match": "\\\\.",
+          "name": "constant.character.escape.ecss"
+        }
+      ]
+    }
+  }
+}

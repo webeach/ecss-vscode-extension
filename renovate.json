@@ -1,0 +1,26 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": ["config:recommended"],
+  "packageRules": [
+    {
+      "matchManagers": ["npm"],
+      "matchUpdateTypes": ["minor", "patch"],
+      "groupName": "JS dev dependencies (minor/patch)",
+      "automerge": true
+    },
+    {
+      "matchPackageNames": [
+        "vscode-languageclient",
+        "vscode-languageserver",
+        "vscode-languageserver-textdocument",
+        "vscode-css-languageservice"
+      ],
+      "groupName": "LSP packages",
+      "automerge": false
+    }
+  ],
+  "lockFileMaintenance": {
+    "enabled": true,
+    "schedule": ["before 3am on monday"]
+  }
+}
