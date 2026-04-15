@@ -3,4 +3,3 @@ src/**
 esbuild.mjs
 tsconfig.json
 node_modules/**
-!node_modules/@ecss/parser/**

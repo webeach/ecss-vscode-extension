@@ -40,18 +40,16 @@ function getParser(): ParseFn | null {
   }
 
   try {
-    // Use the WASM build via the package exports field (`@ecss/parser/wasm`).
-    // This avoids hardcoding internal file paths and works across package versions.
-    // The WASM build has no native .node binary, so it works in any Electron version.
     // eslint-disable-next-line @typescript-eslint/no-require-imports
-    const mod = require('@ecss/parser/wasm') as typeof import('@ecss/parser');
+    const mod =
+      require('@ecss/parser-wasm32-wasi') as typeof import('@ecss/parser');
     _parseEcss = mod.parseEcss;
-    process.stderr.write(`[ecss-server] Loaded @ecss/parser WASM\n`);
+    process.stderr.write(`[ecss-server] Loaded @ecss/parser (WASM)\n`);
     return _parseEcss;
   } catch (err: unknown) {
     _parserError = err instanceof Error ? err.message : String(err);
     process.stderr.write(
-      `[ecss-server] Failed to load @ecss/parser WASM: ${_parserError}\n`,
+      `[ecss-server] Failed to load @ecss/parser: ${_parserError}\n`,
     );
     return null;
   }

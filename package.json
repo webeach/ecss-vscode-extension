@@ -1,7 +1,7 @@
 {
   "name": "ecss-language-support",
   "displayName": "ECSS — Extended CSS",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "VS Code extension for ECSS — syntax highlighting and language server for .ecss files.",
   "categories": [
     "Programming Languages"
@@ -43,7 +43,7 @@
     "prepare": "is-ci || husky"
   },
   "dependencies": {
-    "@ecss/parser": "^0.1.2",
+    "@ecss/parser-wasm32-wasi": "^0.1.3",
     "vscode-css-languageservice": "^6.3.10",
     "vscode-languageclient": "^9.0.1",
     "vscode-languageserver": "^9.0.1",
@@ -52,6 +52,7 @@
   "devDependencies": {
     "@commitlint/cli": "^20.0.0",
     "@commitlint/config-conventional": "^20.0.0",
+    "@ecss/parser": "^0.1.3",
     "@types/node": "^22.0.0",
     "@types/vscode": "^1.85.0",
     "@vscode/vsce": "^3.0.0",
