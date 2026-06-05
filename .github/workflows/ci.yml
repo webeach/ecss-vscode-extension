@@ -71,8 +71,8 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
-      - name: Build
-        run: pnpm build
+      - name: Build (production)
+        run: pnpm build:prod
 
       - name: Publish to VS Code Marketplace
         run: pnpm exec vsce publish --no-dependencies --pat ${{ secrets.VSCE_PAT }}

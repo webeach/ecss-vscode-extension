@@ -12,8 +12,7 @@
       "matchPackageNames": [
         "vscode-languageclient",
         "vscode-languageserver",
-        "vscode-languageserver-textdocument",
-        "vscode-css-languageservice"
+        "vscode-languageserver-textdocument"
       ],
       "groupName": "LSP packages",
       "automerge": false

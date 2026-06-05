@@ -14,8 +14,6 @@ let client: LanguageClient;
 export function activate(context: ExtensionContext): void {
   const serverModule = context.asAbsolutePath(path.join('dist', 'server.js'));
 
-  const debugOptions = { execArgv: ['--nolazy', '--inspect=6009'] };
-
   const serverOptions: ServerOptions = {
     run: {
       module: serverModule,
@@ -24,7 +22,7 @@ export function activate(context: ExtensionContext): void {
     debug: {
       module: serverModule,
       transport: TransportKind.ipc,
-      options: debugOptions,
+      options: { execArgv: ['--nolazy', '--inspect=6009'] },
     },
   };
 
@@ -33,7 +31,12 @@ export function activate(context: ExtensionContext): void {
   const clientOptions: LanguageClientOptions = {
     documentSelector: [{ scheme: 'file', language: 'ecss' }],
     synchronize: {
-      fileEvents: workspace.createFileSystemWatcher('**/*.ecss'),
+      fileEvents: [
+        workspace.createFileSystemWatcher('**/*.ecss'),
+        workspace.createFileSystemWatcher(
+          '**/ecss.config.{ts,js,mts,mjs,cts,cjs}',
+        ),
+      ],
     },
     outputChannel,
     revealOutputChannelOn: RevealOutputChannelOn.Error,

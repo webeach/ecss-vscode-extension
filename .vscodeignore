@@ -1,5 +1,13 @@
-src/**
+# Keep the .vsix lean: ship only the bundled dist + static assets.
+# (package.json, README, LICENSE, and the `icon` are always included.)
+.github/**
+.husky/**
+.idea/**
 .vscode/**
+src/**
+node_modules/**
 esbuild.mjs
 tsconfig.json
-node_modules/**
+.gitignore
+**/*.ts
+**/*.map

@@ -6,6 +6,7 @@ import { dirname, join } from 'node:path';
 
 const require = createRequire(import.meta.url);
 const watch = process.argv.includes('--watch');
+const isDev = process.argv.includes('--dev') || watch;
 
 const wasmPkgDir = dirname(
   require.resolve('@ecss/parser-wasm32-wasi/package.json'),
@@ -36,7 +37,11 @@ const serverOptions = {
   ...commonOptions,
   entryPoints: ['src/server.ts'],
   outfile: 'dist/server.js',
-  external: ['vscode'],
+  // __DEV__ is a compile-time constant: esbuild tree-shakes the unused parser branch.
+  // dev  → native @ecss/parser (kept external, loaded from workspace node_modules)
+  // prod → @ecss/parser-wasm32-wasi (bundled inline by esbuild)
+  define: { __DEV__: JSON.stringify(isDev) },
+  external: ['vscode', ...(isDev ? ['@ecss/parser'] : [])],
 };
 
 const workerOptions = {
