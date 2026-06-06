@@ -11,6 +11,9 @@ importers:
       '@ecss/config':
         specifier: ^0.2.0
         version: 0.2.0
+      '@ecss/grammar':
+        specifier: ^0.2.0
+        version: 0.2.0
       '@ecss/language-service':
         specifier: ^0.2.0
         version: 0.2.0(@emnapi/core@1.10.0)(@emnapi/runtime@1.10.0)
@@ -216,6 +219,9 @@ packages:
     resolution: {integrity: sha512-D6T3Q3uAA+s6d4KYRgv3cqaPU5ZtX8aIwmJWjzGX9pWd/sam0e3euBD17AI/4XGC2SwVNJQOOMhbg+MvVou6zw==}
     engines: {node: '>=18.0.0', pnpm: ^10}
 
+  '@ecss/grammar@0.2.0':
+    resolution: {integrity: sha512-EFaPsf5UR17rM6oW0NgMA8JWT/DtAUvivZ6f6xZkU/Cof4ImX8ea8C8gFzanISHLwkU5b+dUn4xtHHjBXpGslA==}
+
   '@ecss/language-service@0.2.0':
     resolution: {integrity: sha512-xPFJ8o/iyNhv72cTdk/PiMhSUJDF8dimAnDsVp7zbtxeF7SKPkYq0fkTP5QP7vjOxy5V0LgLX0hBZkBeak+QYA==}
     engines: {node: '>=18.0.0', pnpm: ^10}
@@ -241,7 +247,6 @@ packages:
   '@ecss/parser-wasm32-wasi@0.2.0':
     resolution: {integrity: sha512-2u95nsn56ddZjia98ZslwdGt6c13hhq02sIxsrOMBaLRqohvxZIzmaTVpWgURGAow0yEcIXyIW084BAv7FsZOw==}
     engines: {node: '>=18', pnpm: ^10}
-    cpu: [wasm32]
 
   '@ecss/parser-win32-x64-msvc@0.2.0':
     resolution: {integrity: sha512-04NV6z5c20IwzFuF2b+U10LokDyw/gJ3+09Ckea2GSLYz2qlPOjIMIbLyDdSymAutmSB+95bOJ23Mc5npQaZNQ==}
@@ -2310,6 +2315,8 @@ snapshots:
   '@ecss/config@0.2.0':
     dependencies:
       jiti: 2.6.1
+
+  '@ecss/grammar@0.2.0': {}
 
   '@ecss/language-service@0.2.0(@emnapi/core@1.10.0)(@emnapi/runtime@1.10.0)':
     dependencies:

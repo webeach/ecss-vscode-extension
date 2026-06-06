@@ -18,6 +18,14 @@ copyFileSync(
   'dist/ecss-parser.wasm32-wasi.wasm',
 );
 
+// Sync the TextMate grammar from @ecss/grammar (the single source of truth)
+// into syntaxes/, where `contributes.grammars.path` and the .vsix expect it.
+mkdirSync('syntaxes', { recursive: true });
+copyFileSync(
+  require.resolve('@ecss/grammar/ecss.tmLanguage.json'),
+  'syntaxes/ecss.tmLanguage.json',
+);
+
 const commonOptions = {
   bundle: true,
   platform: 'node',

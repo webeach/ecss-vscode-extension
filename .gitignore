@@ -40,3 +40,6 @@ node_modules
 
 # VS Code extension package
 *.vsix
+
+# Synced from @ecss/grammar at build time (esbuild.mjs)
+/syntaxes/ecss.tmLanguage.json
